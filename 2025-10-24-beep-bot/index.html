@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="h-full">
+  <head>
+    <title>Moonside AI</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full bg-zinc-700">
+    <div class="h-full flex flex-col pt-56 items-center">
+      <p class="text-zinc-300">Voiceflow Agency</p>
+      <h1 class="mt-4 text-5xl text-white">Moonside AI</h1>
+      <a
+        class="mt-4 text-md text-cyan-400 hover:text-cyan-300"
+        href="https://moonside.ai"
+        >Website</a
+      >
+    </div>
+    <script type="text/javascript">
+      (function (d, t) {
+        /**
+         * Remote file
+         * Source: https://elevenlabs.io/sound-effects/beeps
+         */
+        const beepUrl = '/2025-10-24-beep-bot/11L-beep-80287891.mp3';
+
+        /**
+         * Inline file
+         * To avoid external files, you can embed short sounds as base64:
+         */
+        // const beepUrl = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGGS56+ukUhELU6rm7rdgGgU7k9j0y3ksAwBy';
+
+        /**
+         * We create a new Audio object for the beep sound
+         *
+         * Docs:
+         * - https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+         * - https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio
+         */
+        const beepAudio = new Audio(beepUrl);
+
+        // Listen for Voiceflow interact events
+        window.addEventListener(
+          'message',
+          (event) => {
+            if (!event.data) return;
+
+            const eventData = JSON.parse(event.data);
+
+            if (eventData.type === 'voiceflow:interact') {
+              // If interact event, play the beep sound
+              beepAudio.play().catch((error) => {
+                console.log('Playback failed:', error);
+              });
+            }
+          },
+          false,
+        );
+
+        // Load Voiceflow chat widget
+        var v = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        v.onload = function () {
+          window.voiceflow.chat.load({
+            verify: { projectID: '68a5ef1867f49328386ad912' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'development',
+            voice: {
+              url: 'https://runtime-api.voiceflow.com',
+            },
+          });
+        };
+        v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
+        v.type = 'text/javascript';
+        s.parentNode.insertBefore(v, s);
+      })(document, 'script');
+    </script>
+  </body>
+</html>
